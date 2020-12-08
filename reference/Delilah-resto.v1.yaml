@@ -1,0 +1,308 @@
+openapi: 3.0.0
+info:
+  title: Delilah-resto
+  version: '1.0'
+  description: Backend API mockup for online food orders
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  '/users/{userId}':
+    parameters:
+      - schema:
+          type: string
+        name: userId
+        in: path
+        required: true
+      - schema:
+          type: integer
+        name: userId
+        in: path
+        required: true
+        description: Id of an existing user.
+    get:
+      summary: get user
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-users-userId
+    put:
+      summary: update user
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: put-users-userId
+    delete:
+      summary: delete user
+      tags: []
+      responses:
+        '204':
+          description: No Content
+      operationId: delete-users-userId
+  /users:
+    post:
+      summary: post user
+      tags: []
+      responses:
+        '201':
+          description: Created
+      operationId: post-users
+    get:
+      summary: get users
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-users
+    parameters: []
+  /products:
+    get:
+      summary: get products
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-products
+    post:
+      summary: post product
+      tags: []
+      responses:
+        '201':
+          description: Created
+      operationId: post-products
+  '/products/{productId}':
+    parameters:
+      - schema:
+          type: string
+        name: productId
+        in: path
+        required: true
+    get:
+      summary: Get Product Info by Product ID
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-products-productId
+      description: Retrieve the information of the product with the matching user ID.
+    put:
+      summary: Update product
+      operationId: put-products-productId
+      responses:
+        '200':
+          description: OK
+      description: Edit existing product
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: ADMIN Auth
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                  minLength: 1
+                price:
+                  type: number
+                img_url:
+                  type: string
+                  minLength: 1
+              required:
+                - id
+                - name
+                - price
+                - img_url
+    delete:
+      summary: Delete product
+      operationId: delete-products-productId
+      responses:
+        '204':
+          description: No Content
+      description: Delete existing product
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: ADMIN Auth
+          required: true
+  /orders:
+    get:
+      summary: get orders
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-orders
+    post:
+      summary: post order
+      tags: []
+      responses:
+        '201':
+          description: Created
+      operationId: post-orders
+  '/orders/{orderId}':
+    parameters:
+      - schema:
+          type: string
+        name: orderId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: orderId
+        in: path
+        required: true
+    get:
+      summary: get order
+      tags:
+        - order
+      responses:
+        '200':
+          description: OK
+      operationId: get-orders-orderId
+    put:
+      summary: update order
+      tags:
+        - order
+      responses:
+        '200':
+          description: OK
+      operationId: put-orders-orderId
+    delete:
+      summary: delete order
+      tags:
+        - order
+      responses:
+        '204':
+          description: No Content
+      operationId: delete-orders-orderId
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: User information schema
+      x-examples:
+        Lucia Migues:
+          id: 0
+          fullname: Lucia Migues
+          email: user@example.com
+          address: Roosevelt 5600
+          phone: 116864123
+          username: lumigues
+          password: 1235
+          is_admin: true
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+        fullname:
+          type: string
+        email:
+          type: string
+          format: email
+        address:
+          type: string
+          format: date
+          example: '1997-10-31'
+        phone:
+          type: number
+          description: Set to true if the user's email has been verified.
+        username:
+          type: string
+        password:
+          type:
+            - string
+            - number
+          format: password
+          minimum: 8
+          maximum: 20
+        is_admin:
+          type: boolean
+      required:
+        - id
+        - fullname
+        - email
+        - phone
+        - username
+        - password
+    Product:
+      title: Product
+      type: object
+      description: Product Schema
+      x-examples:
+        Hamburguesa Clásica:
+          id: 0
+          name: Hamburguesa Clásica
+          price: 350
+          img_url: 'https://www.demoslavueltaaldia.com/sites/default/files/styles/recetas_listado/public/hamburguesas-caseras-venezolanas.jpg?itok=YrUexcMF'
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        img_url:
+          type: string
+      required:
+        - id
+        - name
+        - price
+    Order:
+      title: Order
+      type: object
+      description: Order Schema
+      x-examples:
+        Pedido 1:
+          id: 0
+          user:
+            id: 0
+            fullname: Nombre Apellido
+            email: user@example.com
+            address: Calle 123
+            phone: 123456
+            username: usuario11
+            password: null
+            is_admin: false
+          status: confirmado
+          time: 12.52PM
+          description:
+            - id: 0
+              name: hamburguesa clasica
+              price: 300
+              img_url: url.com/hamburguesa
+          payment_amount: 300
+          payment_method: efectivo
+      properties:
+        id:
+          type: integer
+        user:
+          $ref: '#/components/schemas/User'
+        status:
+          type: string
+        time:
+          type: string
+        description:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        payment_amount:
+          type: number
+        payment_method:
+          type: string
+      required:
+        - id
+        - user
+  securitySchemes: {}
