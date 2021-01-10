@@ -187,6 +187,27 @@ paths:
         '204':
           description: No Content
       operationId: delete-orders-orderId
+  /users/login:
+    post:
+      summary: ''
+      operationId: post-users-login
+      responses:
+        '200':
+          description: OK
+      description: Authenticate user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type:
+                    - string
+                    - number
+        description: Username and password needed to autheticate user for login
 components:
   schemas:
     User:
