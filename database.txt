@@ -1,0 +1,42 @@
+CREATE TABLE `delilah_resto`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `fullname` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `address` VARCHAR(100) NOT NULL,
+  `phone` VARCHAR(15) NULL,
+  `username` VARCHAR(20) NOT NULL,
+  `password` VARCHAR(64) NOT NULL,
+  `is_admin` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE);
+
+  CREATE TABLE `delilah_resto`.`products` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `price` DECIMAL(2) NOT NULL,
+  `img_url` VARCHAR(150) NULL,
+  PRIMARY KEY (`id`));
+
+  CREATE TABLE `delilah_resto`.`orders` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `status` VARCHAR(45) NOT NULL,
+  `time` DATETIME NOT NULL,
+  `description` VARCHAR(150) NOT NULL,
+  `payment_amount` DECIMAL(2) NOT NULL,
+  `payment_method` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `user_id`
+    FOREIGN KEY (`id`)
+    REFERENCES `delilah_resto`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+ALTER TABLE `delilah_resto`.`orders` 
+DROP FOREIGN KEY `user_id`;
+ALTER TABLE `delilah_resto`.`orders` 
+ADD COLUMN `user_id` INT NOT NULL AFTER `payment_method`;
+ALTER TABLE `delilah_resto`.`orders` 
+ADD CONSTRAINT `user_id`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `delilah_resto`.`users` (`id`);
