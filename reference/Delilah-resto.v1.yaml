@@ -309,7 +309,7 @@ components:
       properties:
         id:
           type: integer
-        user:
+        user_id:
           $ref: '#/components/schemas/User'
         status:
           type: string
@@ -325,5 +325,5 @@ components:
           type: string
       required:
         - id
-        - user
+        - user_id
   securitySchemes: {}
