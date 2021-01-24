@@ -16,13 +16,4 @@ module.exports = class UserController {
     }
 }
 
-// const user1 = {
-//     username: 'alice123',
-//   fullname: 'Alice Wonderland',
-//   email: 'alice123@gmail.com',
-//   address: 'Montevideo 552',
-//   phone: '541168651253',
-//   password: 1234
-// }
-// const res = JSON.stringify(user1);
-// console.log(res);
+
