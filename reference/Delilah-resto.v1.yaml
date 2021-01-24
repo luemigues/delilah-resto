@@ -224,6 +224,7 @@ components:
           username: lumigues
           password: 1235
           is_admin: true
+          is_active: true
       properties:
         id:
           type: integer
@@ -250,6 +251,8 @@ components:
           minimum: 8
           maximum: 20
         is_admin:
+          type: boolean
+        is_active:
           type: boolean
       required:
         - id
