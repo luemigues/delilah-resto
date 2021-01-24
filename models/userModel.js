@@ -41,7 +41,12 @@ User.init({
   is_admin: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-    defaultValue: false
+    defaultValue: '0'
+  }, 
+  is_active: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: '1'
   }
 }, {
   // Other model options go here
