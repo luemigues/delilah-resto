@@ -4,7 +4,7 @@ const userController = require('../controllers/userController.js');
 const Middlewares = require('../middleware/userMiddlewares.js');
 
 
-usersRouter.post('/', userController.createUser);
+usersRouter.post('/', Middlewares.checkDataAvailability, userController.createUser);
 usersRouter.get('/', userController.getUsers);
 
 usersRouter.use('/:id', Middlewares.checkExistance)

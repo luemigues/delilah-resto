@@ -3,41 +3,78 @@ const userRepository = require('../repositories/userRepository');
 module.exports = class UserController {
     
     static async createUser(req, res){
-            const newUser = {
-                username: req.body.username,
-                fullname: req.body.fullname,
-                email: req.body.email,
-                address: req.body.address,
-                phone: req.body.phone,
-                password: req.body.password
+        const {
+            username,
+            fullname,
+            email,
+            address,
+            phone,
+            password,
+          } = req.body;
+
+        if(username && fullname && email && address && phone && password){
+            try{
+                const newUser = {
+                    username: username,
+                    fullname: fullname,
+                    email: email,
+                    address: address,
+                    phone: phone,
+                    password: password
+                }
+
+                let user = await userRepository.createUser(newUser);
+                res.status(201).json(user)
+
+            }catch(err){
+                next(new Error(err));
             }
-            let user = await userRepository.createUser(newUser);
-            res.json(user)
+        }else{
+            res.status(400).json("Missing information");
+        }
     }
 
     static async getUsers(req, res){
-        let users = await userRepository.getUsers()
-        res.json(users)
+        try{
+            let users = await userRepository.getUsers()
+            res.json(users)
+
+        }catch(err){
+            new Error(err)
+        }
     }
 
     static async getUser(req, res){
-        let userId = req.params.id
-        let user = await userRepository.getUser(userId)
-        res.json(user)
+        try{
+            let userId = req.params.id
+            let user = await userRepository.getUser(userId)
+            res.json(user)
+
+        }catch(err){
+            new Error(err)
+        }
     }
 
     static async updateUser(req, res){
-        let userId = req.params.id
-        let userUpdate = req.body
-        let user = await userRepository.updateUser(userId, userUpdate)
-        res.json(user)
+        try{
+            let userId = req.params.id
+            let userUpdate = req.body
+            let user = await userRepository.updateUser(userId, userUpdate)
+            res.json(user)
+        }catch(err){
+            new Error(err)
+        }
     }
 
     static async deleteUser(req, res){
-        let userId = req.params.id
-        let user = await userRepository.deleteUser(userId)
-        res.json(user)
-        res.status(204)
+        try{
+            let userId = req.params.id
+            let user = await userRepository.deleteUser(userId)
+            res.json(user)
+            res.status(204)
+        }catch(err){
+            new Error(err)
+        }
     }
 }
 
