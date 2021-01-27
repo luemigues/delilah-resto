@@ -3,7 +3,7 @@ const attributes = {attributes: ['username', 'fullname', 'email', 'address', 'ph
 module.exports = class UserRepository{
 
     static async createUser(user){
-      const newUser = await UserModel.create(user,{fields: ['username', 'fullname', 'email', 'address', 'phone', 'password']});
+      const newUser = await UserModel.create(user,{fields: ['username', 'fullname', 'email', 'address', 'phone', 'password', 'is_admin']});
         return await UserModel.findByPk(newUser.id, attributes)
     }
 

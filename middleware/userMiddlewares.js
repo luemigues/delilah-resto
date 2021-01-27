@@ -1,12 +1,11 @@
 const bodyParser = require('body-parser');
 const UserModel = require('../models/userModel');
-const OrderModel = require('../models/orderModel');
-const ProductModel = require('../models/productModel');
+const { verifyToken } = require('../auth/auth.js');
 
 module.exports = class Middlewares {
 
-    static bodyParser (req, res, next){
-    bodyparser.json()
+    static bodyParser(req, res, next){
+    bodyParser.json()
     next()
     }
 
@@ -21,7 +20,8 @@ module.exports = class Middlewares {
                 next()
             }
         }catch(err){
-            new Error(err)
+            res.status(500).json('Server Error')
+            console.log(err)
         }
     
     }
@@ -41,8 +41,28 @@ module.exports = class Middlewares {
                 }
 
             }catch(err){
-                new Error(err)
+                res.status(500).json('Server Error')
+                console.log(err)
             }
+        }
+    }
+
+    static validateIdOwnership(req, res, next){
+        try{
+            const paramId = req.params.id
+    
+            const token = req.headers.authorization;
+            const verifiedUser = verifyToken(token);
+            const tokenId = verifiedUser.userId
+    
+            if(paramId == tokenId || verifiedUser.is_admin){
+                next()
+            }else{
+                res.status(401).json("Unauthorized");
+            }
+        }catch(err){
+            res.status(500).json('Server Error')
+            console.log(err)
         }
     }
 
@@ -50,33 +70,44 @@ module.exports = class Middlewares {
 
         try{
             const token = req.headers.authorization;
-            const validatedUser = JWT.verify(token, signature);
-            const { is_admin } = validatedUser;
+            const verifiedUser = verifyToken(token);
+            const { is_admin } = verifiedUser;
+
             if(is_admin){
-                req.is_admin = is_admin;
                 next()
             }else {
                 res.status(401).json("Unauthorized");
             }
         }catch(err){
-            new Error(err);
+            res.status(500).json('Server Error')
+            console.log(err)
         }
 
     }
 
-    static async valiateUserCredentials(req, res, next){
-        const { username, password } = req.body;
+
+    static async validateToken(req, res, next){
+        const token = req.headers.authorization;
         try {
-            const validUser = await UserModel.findOne({ where: { username: username } });
-            if (validUser) {
-            
-                next();
-            } else {
-                res.status(400).json("Invalid Username");
+            if(token){
+
+                // Verify token
+                const verifiedUser = verifyToken(token);
+                // Verify with token if user exists
+                const validUser = await UserModel.findOne({ where: { id: verifiedUser.userId } });
+    
+                if (validUser) {
+                    next();
+                } else {
+                    res.status(400).json("Invalid access token");
+                }
+            }else{
+                res.status(400).json("No access token provided");
             }
             
         } catch (err) {
-            new Error(err)
+            res.status(500).json('Server Error')
+            console.log(err)
         }
     }
 

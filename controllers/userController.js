@@ -1,4 +1,8 @@
 const userRepository = require('../repositories/userRepository');
+const UserModel = require('../models/userModel.js');
+const { signToken } = require('../auth/auth.js');
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr(process.env.CRYPTOKEY);
 
 module.exports = class UserController {
     
@@ -10,24 +14,30 @@ module.exports = class UserController {
             address,
             phone,
             password,
+            is_admin
           } = req.body;
 
         if(username && fullname && email && address && phone && password){
             try{
+                const hashedPass = cryptr.encrypt(password);
+                console.log(is_admin)
+
                 const newUser = {
                     username: username,
                     fullname: fullname,
                     email: email,
                     address: address,
                     phone: phone,
-                    password: password
+                    password: hashedPass,
+                    is_admin: is_admin
                 }
 
                 let user = await userRepository.createUser(newUser);
                 res.status(201).json(user)
 
             }catch(err){
-                next(new Error(err));
+                res.status(500).json('Server Error')
+                console.log(err)
             }
         }else{
             res.status(400).json("Missing information");
@@ -40,7 +50,8 @@ module.exports = class UserController {
             res.json(users)
 
         }catch(err){
-            new Error(err)
+            res.status(500).json('Server Error')
+                console.log(err)
         }
     }
 
@@ -51,7 +62,8 @@ module.exports = class UserController {
             res.json(user)
 
         }catch(err){
-            new Error(err)
+            res.status(500).json('Server Error')
+            console.log(err)
         }
     }
 
@@ -62,7 +74,8 @@ module.exports = class UserController {
             let user = await userRepository.updateUser(userId, userUpdate)
             res.json(user)
         }catch(err){
-            new Error(err)
+            res.status(500).json('Server Error')
+            console.log(err)
         }
     }
 
@@ -73,9 +86,43 @@ module.exports = class UserController {
             res.json(user)
             res.status(204)
         }catch(err){
-            new Error(err)
+            res.status(500).json('Server Error')
+             console.log(err)
+        }
+    }
+
+    static async login(req, res){
+        const { username, password } = req.body;
+        if(username && password){
+            try {
+                const validUser = await UserModel.findOne({ 
+                    where: { 
+                        username: username
+                    }
+                });
+                
+                if (validUser) {
+                    const decryPass = cryptr.decrypt(validUser.password);
+
+                    if(password == decryPass){
+                        const token = signToken(validUser.id, validUser.is_admin)
+                        res.status(200).json(token)
+
+                    }else{
+                        res.status(400).json("Invalid password");
+                    }
+
+
+                } else {
+                    res.status(400).json("Invalid Username");
+                }
+                
+            } catch (err) {
+                res.status(500).json('Server Error')
+                console.log(err)
+            }
+        }else{
+            res.status(400).json("Missing information");
         }
     }
 }
-
-

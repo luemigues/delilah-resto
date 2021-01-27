@@ -35,13 +35,13 @@ User.init({
     unique: true,
   },
   password: {
-    type: DataTypes.STRING(64),
+    type: DataTypes.STRING(256),
     allowNull: false,
   },
   is_admin: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-    defaultValue: '0'
+    defaultValue: '0',
   }, 
   is_active: {
     type: DataTypes.BOOLEAN,
