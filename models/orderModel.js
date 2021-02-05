@@ -45,7 +45,7 @@ Order.init({
   tableName: 'orders'
 });
 
-Order.hasOne(User, {
+User.hasOne(Order, {
   foreignKey: {
     name: 'user_id', 
     allowNull: false
