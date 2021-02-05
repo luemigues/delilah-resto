@@ -59,7 +59,7 @@ module.exports = class UserController {
         try{
             let userId = req.params.id
             let user = await userRepository.getUser(userId)
-            res.json(user)
+            res.status(200).json(user)
 
         }catch(err){
             res.status(500).json('Server Error')
@@ -72,7 +72,7 @@ module.exports = class UserController {
             let userId = req.params.id
             let userUpdate = req.body
             let user = await userRepository.updateUser(userId, userUpdate)
-            res.json(user)
+            res.status(200).json(user)
         }catch(err){
             res.status(500).json('Server Error')
             console.log(err)

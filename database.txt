@@ -16,7 +16,7 @@ CREATE TABLE `users` (
 CREATE TABLE `products` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(60) NOT NULL,
-  `price` decimal(2,0) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
   `img_url` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )
@@ -27,7 +27,7 @@ CREATE TABLE `orders` (
   `status` varchar(25) NOT NULL,
   `time` datetime NOT NULL,
   `description` varchar(200) NOT NULL,
-  `payment_amount` decimal(2,0) NOT NULL,
+  `payment_amount` decimal(10,2) NOT NULL,
   `payment_method` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id_idx` (`user_id`),
