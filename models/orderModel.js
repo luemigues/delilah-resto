@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = require('../database/database.js');
 const User = require('./userModel.js');
+const Product = require('./productModel.js');
 
 class Order extends Model {}
 
@@ -30,7 +31,7 @@ Order.init({
     allowNull: false
   },
   payment_amount: {
-    type: DataTypes.DECIMAL(2,0),
+    type: DataTypes.DECIMAL(10,2),
     allowNull: false
   },
   payment_method: {
@@ -51,6 +52,14 @@ User.hasOne(Order, {
     allowNull: false
   }
 });
+
+Product.hasMany(Order, {
+  foreignKey: {
+    name: 'description', 
+    allowNull: false
+  }
+});
+
 
 // the defined model is the class itself
 console.log(Order === sequelize.models.Order); // true

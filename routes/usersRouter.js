@@ -3,10 +3,13 @@ const usersRouter = express.Router();
 const userController = require('../controllers/userController.js');
 const Middlewares = require('../middleware/userMiddlewares.js');
 
-usersRouter.post('/login', userController.login)
+usersRouter.post('/login', userController.login);
+
+usersRouter.use(Middlewares.checkToken);
+
 usersRouter.post('/', Middlewares.checkDataAvailability, userController.createUser);
 
-usersRouter.use('/', Middlewares.validateToken)
+usersRouter.use('/', Middlewares.validateToken);
 
 usersRouter.get('/', Middlewares.validateAdmin, userController.getUsers);
 

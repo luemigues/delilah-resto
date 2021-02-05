@@ -4,11 +4,6 @@ const { verifyToken } = require('../auth/auth.js');
 
 module.exports = class Middlewares {
 
-    static bodyParser(req, res, next){
-    bodyParser.json()
-    next()
-    }
-
     static async checkExistance(req, res, next){
         try{
             const id = req.params.id
@@ -108,6 +103,15 @@ module.exports = class Middlewares {
         } catch (err) {
             res.status(500).json('Server Error')
             console.log(err)
+        }
+    }
+
+    static checkToken(req, res, next){
+        const token = req.headers.authorization;
+        if(token){
+            next()
+        }else{
+            res.status(401).json("Unauthorized - Please login");
         }
     }
 
