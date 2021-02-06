@@ -1,17 +1,27 @@
-const ProductModel = require('../models/productModel');
+const OrderModel = require('../models/orderModel');
 const { verifyToken } = require('../auth/auth.js');
+const e = require('express');
 
 module.exports = class Middlewares {
 
     static async checkExistance(req, res, next){
         try{
             const id = req.params.id
-            const product = await ProductModel.findByPk(id)
+            const order = await OrderModel.findByPk(id)
     
-             if(product === null){
-                    res.status(404).send('Product not found!')
+             if(order === null){
+                    res.status(404).send('Order not found!')
             }else{
-                next()
+                const token = req.headers.authorization;
+                const verifiedUser = verifyToken(token);
+                const { userId, is_admin } = verifiedUser;
+
+
+                if(userId == order.user_id || is_admin){
+                    next()
+                }else{
+                    res.status(401).json("Unauthorized");
+                }
             }
         }catch(err){
             res.status(500).json('Server Error')

@@ -9,7 +9,6 @@ async function getOrderDescription(products){
         const {amount, product_id} = products[i];
         const product = await productModel.findByPk(product_id, {fields: ['name']});
         description += ` ${amount}x${product.name}`;
-        console.log(description)
     }
     return description
 };
@@ -42,7 +41,6 @@ module.exports = class OrderController {
                 const { userId } = verifiedUser;
 
                 if(userId){
-                    console.log(userId)
                     const description = await getOrderDescription(products);
                     const payment_amount = await getTotalAmount(products);
 
@@ -54,8 +52,6 @@ module.exports = class OrderController {
                         payment_amount: payment_amount,
                         payment_method: payment_method
                     }
-
-                    console.log(newOrder)
                     
                     let order = await orderRepository.createOrder(newOrder, products);
                     res.status(201).json(order)
@@ -103,17 +99,21 @@ module.exports = class OrderController {
 
             const {
                 status, 
-                payment_method,
-                payment_amount,
-                description
+                payment_method
                 } = req.body;
 
-            if(status || payment_amount || payment_method || description){
-                let orderUpdate = req.body
+            if(status || payment_method){
+
+                let orderUpdate = {
+                    status: req.body.status,
+                    payment_method: req.body.payment_method
+                }
+
                 let order = await orderRepository.updateOrder(orderId, orderUpdate)
                 res.status(200).json(order)
+
             }else{
-                res.status(400).json("Missing information");
+                res.status(400).json("Missing information or property can not be modified");
             }
         }catch(err){
             res.status(500).json('Server Error')
