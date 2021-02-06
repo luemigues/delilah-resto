@@ -2,6 +2,16 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = require('../database/database.js');
 const User = require('./userModel.js');
 const Product = require('./productModel.js');
+const OrderProduct = require('./orderProdModel');
+
+const status = {
+  new: 'New',
+  confirmed: 'Confirmed',
+  inProgress: 'In Progress',
+  sent: 'Sent',
+  recieved: 'Recieved',
+  canceled: 'Canceled'
+}
 
 class Order extends Model {}
 
@@ -20,15 +30,16 @@ Order.init({
   },
   status: {
     type: DataTypes.STRING(25),
-    allowNull: false
+    allowNull: false,
+    defaultValue: status.new
   },
   time: {
     type: DataTypes.DATE,
     allowNull: false
   },
   description: {
-    type: DataTypes.STRING(200),
-    allowNull: false
+    type: DataTypes.STRING,
+    allowNull: false, 
   },
   payment_amount: {
     type: DataTypes.DECIMAL(10,2),
@@ -53,12 +64,10 @@ User.hasOne(Order, {
   }
 });
 
-Product.hasMany(Order, {
-  foreignKey: {
-    name: 'description', 
-    allowNull: false
-  }
-});
+Order.belongsTo(User,  {foreignKey: 'user_id', as: 'user'});
+
+Order.belongsToMany(Product, { as: 'order_product', through: OrderProduct, foreignKey: 'order_id' })
+Product.belongsToMany(Order, { as: 'products', through: OrderProduct, foreignKey: 'product_id' })
 
 
 // the defined model is the class itself
