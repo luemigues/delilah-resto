@@ -1,5 +1,7 @@
 const UserModel = require('../models/userModel.js');
 const attributes = {attributes: ['username', 'fullname', 'email', 'address', 'phone']}
+const Order = require('../models/orderModel');
+
 module.exports = class UserRepository{
 
     static async createUser(user){
@@ -8,11 +10,22 @@ module.exports = class UserRepository{
     }
 
     static async getUsers(){
-        return await UserModel.findAll(attributes)
+        return await UserModel.findAll({
+            include: [
+              {
+                model: Order,
+                as: 'Orders',
+              }]})
     }
 
     static async getUser(id){
-        return await UserModel.findByPk(id, attributes)
+        return await UserModel.findByPk(id, {
+            attributes: attributes.attributes,
+            include: [
+              {
+                model: Order,
+                as: 'Orders',
+              }]})
     }
 
     static async updateUser(id, userUpdate){

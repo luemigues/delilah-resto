@@ -23,11 +23,6 @@ Order.init({
     primaryKey: true,
     autoIncrement: true
   },
-  user_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-    // allowNull defaults to true
-  },
   status: {
     type: DataTypes.STRING(25),
     allowNull: false,
@@ -57,14 +52,9 @@ Order.init({
   tableName: 'orders'
 });
 
-User.hasOne(Order, {
-  foreignKey: {
-    name: 'user_id', 
-    allowNull: false
-  }
-});
+Order.belongsTo(User, { as: 'user' });
 
-Order.belongsTo(User,  {foreignKey: 'user_id', as: 'user'});
+User.hasMany(Order, {foreignKey: 'userId'});
 
 Order.belongsToMany(Product, { as: 'order_product', through: OrderProduct, foreignKey: 'order_id' })
 Product.belongsToMany(Order, { as: 'products', through: OrderProduct, foreignKey: 'product_id' })
