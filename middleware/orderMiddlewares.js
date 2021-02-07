@@ -17,7 +17,7 @@ module.exports = class Middlewares {
                 const { userId, is_admin } = verifiedUser;
 
 
-                if(userId == order.user_id || is_admin){
+                if(userId == order.userId || is_admin){
                     next()
                 }else{
                     res.status(401).json("Unauthorized");

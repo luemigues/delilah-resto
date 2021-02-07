@@ -45,7 +45,7 @@ module.exports = class OrderController {
                     const payment_amount = await getTotalAmount(products);
 
                     const newOrder = {
-                        user_id: userId,
+                        userId: userId,
                         status: 'new',
                         time: new Date(),
                         description: description,

@@ -1,12 +1,13 @@
 const OrderModel = require('../models/orderModel.js');
 const Product = require('../models/productModel.js');
 const OrderProduct = require('../models/OrderProdModel.js');
+const User = require("../models/userModel");
 
 module.exports = class OrderRepository{
 
     static async createOrder(order, products){
 
-        const newOrder = await OrderModel.create(order,{fields: ['user_id','status', 'time', 'description', 'payment_amount', 'payment_method' ]});
+        const newOrder = await OrderModel.create(order,{fields: ['status', 'time', 'description', 'payment_amount', 'payment_method']});
         
         for(i=0; i < products.length; i++){
             const {amount, product_id} = products[i];
@@ -23,15 +24,22 @@ module.exports = class OrderRepository{
             where: {
                 id: newOrder.id
               },
-            include: [{
-              model: Product,
-              as: 'order_product',
-              through:{
-                as: 'Ordered',
-                attributes: ['amount']
-            },
-              attributes:['name', 'price']
-            }]
+              include: [
+                {
+                model: User,
+                as: 'user',
+                attributes: ['username', 'fullname', 'email', 'address', 'phone']
+              },
+              {
+                model: Product,
+                as: 'order_product',
+                through:{
+                  as: 'Ordered',
+                  attributes: ['amount']
+              },
+                attributes:['name', 'price']
+              }          
+            ]
           });
 
         return registeredOrder
@@ -39,7 +47,13 @@ module.exports = class OrderRepository{
   
       static async getOrders(){
 
-          return await OrderModel.findAll({include: [{
+          return await OrderModel.findAll({include: [
+            {
+            model: User,
+            as: 'user',
+            attributes: ['username', 'fullname', 'email', 'address', 'phone']
+          },
+          {
             model: Product,
             as: 'order_product',
             through:{
@@ -47,12 +61,19 @@ module.exports = class OrderRepository{
               attributes: ['amount']
           },
             attributes:['name', 'price']
-          }]})
+          }          
+        ]})
       }
   
       static async getOrder(id){
 
-          return await OrderModel.findByPk(id, {include: [{
+          return await OrderModel.findByPk(id, {include: [
+            {
+            model: User,
+            as: 'user',
+            attributes: ['username', 'fullname', 'email', 'address', 'phone']
+          },
+          {
             model: Product,
             as: 'order_product',
             through:{
@@ -60,13 +81,20 @@ module.exports = class OrderRepository{
               attributes: ['amount']
           },
             attributes:['name', 'price']
-          }]})
+          }          
+        ]})
       }
   
       static async updateOrder(id, orderUpdate){
 
           await OrderModel.update(orderUpdate, { where: { id: id } })
-          const updatedOrder = await OrderModel.findByPk(id, {include: [{
+          const updatedOrder = await OrderModel.findByPk(id, {include: [
+            {
+            model: User,
+            as: 'user',
+            attributes: ['username', 'fullname', 'email', 'address', 'phone']
+          },
+          {
             model: Product,
             as: 'order_product',
             through:{
@@ -74,13 +102,20 @@ module.exports = class OrderRepository{
               attributes: ['amount']
           },
             attributes:['name', 'price']
-          }]})
+          }          
+        ]})
           return updatedOrder;
       }
   
       static async deleteOrder(id){
 
-          const deletedOrder = await OrderModel.findByPk(id, {include: [{
+          const deletedOrder = await OrderModel.findByPk(id, {include: [
+            {
+            model: User,
+            as: 'user',
+            attributes: ['username', 'fullname', 'email', 'address', 'phone']
+          },
+          {
             model: Product,
             as: 'order_product',
             through:{
@@ -88,7 +123,8 @@ module.exports = class OrderRepository{
               attributes: ['amount']
           },
             attributes:['name', 'price']
-          }]});
+          }          
+        ]});
 
             await OrderModel.destroy({
             where: {
