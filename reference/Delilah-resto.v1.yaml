@@ -23,6 +23,13 @@ paths:
           description: OK
       operationId: get-users-userId
       description: Retrieve the information of the user with the matching user ID.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     put:
       summary: update user
       tags:
@@ -58,6 +65,13 @@ paths:
                   fullname: string
                   address: string
                   phone: string
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     delete:
       summary: delete user
       tags:
@@ -67,6 +81,13 @@ paths:
           description: No Content
       operationId: delete-users-userId
       description: Delete the user matching the ID.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
   /users:
     post:
       summary: post user
@@ -131,6 +152,13 @@ paths:
           description: OK
       operationId: get-users
       description: Get all users
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     parameters: []
   /products:
     get:
@@ -142,6 +170,13 @@ paths:
           description: OK
       operationId: get-products
       description: Get all existing products
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     post:
       summary: post product
       tags:
@@ -177,6 +212,13 @@ paths:
                   price: 0
                   img_url: string
         description: ''
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
   '/products/{productId}':
     parameters:
       - schema:
@@ -194,6 +236,13 @@ paths:
           description: OK
       operationId: get-products-productId
       description: Retrieve the information of the product with the matching ID.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     put:
       summary: Update product
       operationId: put-products-productId
@@ -206,7 +255,7 @@ paths:
             type: string
           in: header
           name: Authentication
-          description: ADMIN Auth
+          description: Login Token
           required: true
       requestBody:
         content:
@@ -247,7 +296,7 @@ paths:
             type: string
           in: header
           name: Authentication
-          description: ADMIN Auth
+          description: Login Token
           required: true
       tags:
         - Products
@@ -261,6 +310,13 @@ paths:
           description: OK
       operationId: get-orders
       description: Retrieve all the orders
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     post:
       summary: post order
       tags:
@@ -304,6 +360,13 @@ paths:
                       product_id: 0
                   payment_method: string
         description: ''
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
   '/orders/{orderId}':
     parameters:
       - schema:
@@ -321,6 +384,13 @@ paths:
           description: OK
       operationId: get-orders-orderId
       description: Retrieve the information of the order with the matching that ID.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     put:
       summary: update order
       tags:
@@ -351,6 +421,13 @@ paths:
                 value:
                   status: string
                   payment_method: string
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     delete:
       summary: delete order
       tags:
@@ -360,6 +437,13 @@ paths:
           description: No Content
       operationId: delete-orders-orderId
       description: Delete the order matching the ID.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
   '/users/{login}':
     post:
       summary: ''
