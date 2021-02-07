@@ -39,7 +39,7 @@ module.exports = class OrderController {
                 const token = req.headers.authorization;
                 const verifiedUser = verifyToken(token);
                 const { userId } = verifiedUser;
-
+                console.log(userId)
                 if(userId){
                     const description = await getOrderDescription(products);
                     const payment_amount = await getTotalAmount(products);
