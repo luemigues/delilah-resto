@@ -1,0 +1,557 @@
+{
+	"info": {
+		"_postman_id": "3f30bf2a-d32f-4a24-8635-ef120caff0f8",
+		"name": "Delilah-resto API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "by ID",
+					"item": [
+						{
+							"name": "Get SPECIFIC user",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/users/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"1"
+									]
+								},
+								"description": "Provides information about specific user, accessed by ID provided in the paramenters. \r\n\r\nOnly accessible by admin or the user that owns it. "
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"address\":\"Libertador 5555\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/users/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"1"
+									]
+								},
+								"description": "Updates information of a specific user identified by the ID included en the request parameter. \r\n\r\nOnly available for admin use or user owning the profile. "
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/users/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"1"
+									]
+								},
+								"description": "Deletes User. \r\n\r\nIf the request is sent by the owner of the profile, it only changes user status to \"is_active: false\". It does not permantly delete the user information from the data base. \r\n\r\nIf the request is sent by an admin user, it is permanently deleted from the database. \r\n\r\nOnly accesible by amdin users or the user that ownes the profile. "
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Regular User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"alice\",\"fullname\":\"Alice Wonderland\",\"email\":\"alice@gmail.com\",\"address\":\"Montevideo 552\",\"phone\":\"541168651253\",\"password\":1234}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						},
+						"description": "Create a new USER.\r\n-Not admin\r\nAdds information that would be contained in a regular new user form of a website:\r\n - username\r\n - fullname\r\n - email\r\n - address\r\n - phone number\r\n - password"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Admin User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"Harry123\",\"fullname\":\"Harry Potter\",\"email\":\"harrypotter@gmail.com\",\"address\":\"Libertador 431\",\"phone\":\"5411235263\",\"password\":1234, \"is_admin\": true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						},
+						"description": "Creates a new user with Administrator access\r\nRequest adds \"is_admin\": true"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.environment.set(\"token\", jsonData);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"Harry123\", \"password\":1234}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"login"
+							]
+						},
+						"description": "Autenticates user and provides access token that includes userId and information about admin status."
+					},
+					"response": []
+				},
+				{
+					"name": "Get ALL users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						},
+						"description": "Provides all users information.\r\nOnly accesible by admin users."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "by ID",
+					"item": [
+						{
+							"name": "Get SPECIFIC Product",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/products/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"products",
+										"1"
+									]
+								},
+								"description": "Retrieves a specific product in the database. \r\n\r\nCan be accesed by all users. "
+							},
+							"response": []
+						},
+						{
+							"name": "Update Product",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"price\": \"150.00\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/products/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"products",
+										"1"
+									]
+								},
+								"description": "Updates a specific product's information by accesing the ID indicated in the request parameters. \r\n\r\nCan only be accessed by admin users. "
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/products/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"products",
+										"1"
+									]
+								},
+								"description": "Deletes a product. \r\n\r\nCan only be accessed by admin users and permanently deletes a product from the database. "
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\": \"Pizza Margerita\", \"price\": \"400.00\", \"img_url\": \"https://www.recetasderechupete.com/wp-content/uploads/2017/01/pizza_margarita.jpg\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						},
+						"description": "Creates a new product in the database. \r\nThe request should include: \r\n\r\n- name\r\n- price\r\n- img_url\r\n\r\nCan only be accessed by admin users. "
+					},
+					"response": []
+				},
+				{
+					"name": "Get ALL Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						},
+						"description": "Retrives information of all products available in the database.\r\n\r\nCan be accessed by all users. "
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "by ID",
+					"item": [
+						{
+							"name": "Get SPECIFIC order",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/orders/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"orders",
+										"1"
+									]
+								},
+								"description": "Retrieves a specific order accessed by the order ID indicated in the request parameter. \r\n\r\nCan only be accesed by an admin user or the user owner of the order. "
+							},
+							"response": []
+						},
+						{
+							"name": "Update Order",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"status\": \"canceled\", \"payment_method\": \"card\"}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/orders/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"orders",
+										"1"
+									]
+								},
+								"description": "Updates an order. Order number indicated with the Order ID in the request parameter. \r\n\r\nCan only be accesed by admin users to update ORDER STATUS *OR* PAYMENT METHOD. "
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Order",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/orders/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"orders",
+										"1"
+									]
+								},
+								"description": "Deletes an order permanently from the database. \r\nOrder ID to be deleted specified in the request parameter. \r\n\r\nCan only be accessed by admin users. "
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"products\":[{\"amount\": 3, \"product_id\": 1 }], \"payment_method\": \"cash\"}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"orders"
+							]
+						},
+						"description": "Creates a new order for the user requesting it (user information retrieved by token autentication in header).\r\n\r\nPOST should contain:\r\n\r\n- Array of products made up by objects indicating:\r\n    - Product ID\r\n    - Amount\r\n- Payment Method"
+					},
+					"response": []
+				},
+				{
+					"name": "Get ALL orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"orders"
+							]
+						},
+						"description": "Retrieves all orders in the database. \r\n\r\nCan only be accesed by admin users. "
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
