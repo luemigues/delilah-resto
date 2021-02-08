@@ -56,8 +56,9 @@ Order.belongsTo(User, { as: 'user' });
 
 User.hasMany(Order, {foreignKey: 'userId'});
 
-Order.belongsToMany(Product, { as: 'order_product', through: OrderProduct, foreignKey: 'order_id' })
-Product.belongsToMany(Order, { as: 'products', through: OrderProduct, foreignKey: 'product_id' })
+Order.belongsToMany(Product, { as: 'order_product', through: OrderProduct, foreignKey: 'order_id' });
+
+Product.belongsToMany(Order, { as: 'products', through: OrderProduct, foreignKey: 'product_id' });
 
 
 // the defined model is the class itself

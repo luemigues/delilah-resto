@@ -23,13 +23,21 @@ CREATE TABLE `products` (
 
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
+  `userId` int NOT NULL,
   `status` varchar(25) NOT NULL,
   `time` datetime NOT NULL,
   `description` varchar(200) NOT NULL,
   `payment_amount` decimal(10,2) NOT NULL,
   `payment_method` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id_idx` (`user_id`),
-  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  KEY `userId_idx` (`userId`),
+  CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
+) 
+
+CREATE TABLE `orderproducts` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `amount` int NOT NULL,
+  PRIMARY KEY (`id`)
 )

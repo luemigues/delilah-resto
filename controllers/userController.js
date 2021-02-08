@@ -1,6 +1,6 @@
 const userRepository = require('../repositories/userRepository');
 const UserModel = require('../models/userModel.js');
-const { signToken } = require('../auth/auth.js');
+const { signToken, verifyToken } = require('../auth/auth.js');
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr(process.env.CRYPTOKEY);
 
@@ -80,11 +80,23 @@ module.exports = class UserController {
     }
 
     static async deleteUser(req, res){
+        
         try{
+            const token = req.headers.authorization;
+            const verifiedUser = verifyToken(token);
+            const { is_admin } = verifiedUser;
             let userId = req.params.id
-            let user = await userRepository.deleteUser(userId)
-            res.json(user)
+
+            if(is_admin){
+                let userAdmin = await userRepository.deleteUserAdmin(userId)
+                res.json(userAdmin)
+            }else {
+                let user = await userRepository.deleteUser(userId)
+                res.json(user)
+            }
+
             res.status(204)
+            
         }catch(err){
             res.status(500).json('Server Error')
              console.log(err)

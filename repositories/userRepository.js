@@ -39,4 +39,14 @@ module.exports = class UserRepository{
         await UserModel.update({ is_active: '0' }, { where: { id: id } })
         return updatedUser;
     }
+
+    static async deleteUserAdmin(id){
+        const deletedUser = await UserModel.findByPk(id, attributes);
+        await UserModel.destroy({
+            where: {
+              id: id
+            }
+          });
+        return deletedUser;
+    }
 }
