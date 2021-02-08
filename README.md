@@ -61,10 +61,10 @@ Puede instalar en su ordenador la base de datos que desee XAMPP, MariaDB, Worben
 Una vez instalada la base y configurado el archivo *.env*, la aplicación creará automáticamente tanto la Base de Datos, como las tablas y sus relaciones.
 
 En caso que se quisieran popular las tablas con algunos ejemplos, seguir los siguientes pasos:
-    1. Abrir el la plataforma de base de datos que se usará.
-    2. Ir a la pestaña de servidor.
-    3. Importar los archivos .sql ubicados en la carpeta "Populate_tables" contenida dentro de la carpeta ¨database¨.
-    4. También, se puede copiar y pegar los textos dentro de cada archivo y se obtendrá el mismo resultado. 
+1. Abrir el la plataforma de base de datos que se usará.
+2. Ir a la pestaña de servidor.
+3. Importar los archivos .sql ubicados en la carpeta "Populate_tables" contenida dentro de la carpeta ¨database¨.
+4. También, se puede copiar y pegar los textos dentro de cada archivo y se obtendrá el mismo resultado. 
 
 ### 3. Iniciar el servidor
 
