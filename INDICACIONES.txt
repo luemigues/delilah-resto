@@ -1,0 +1,8 @@
+Proyecto por Lucia Migues
+
+GITHUB PROYECT: https://github.com/luemigues/delilah-resto
+
+DOCUMENTACIÓN: 
+	- Archivo .yaml en carpeta DOCUMENTATION
+	- Archivo SQL en carpeta DATABASE
+	- API testing: https://documenter.getpostman.com/view/12198401/TW74k5fZ
