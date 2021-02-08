@@ -9,11 +9,6 @@ paths:
   '/users/{userId}':
     parameters:
       - schema:
-          type: string
-        name: userId
-        in: path
-        required: true
-      - schema:
           type: integer
         name: userId
         in: path
@@ -21,56 +16,209 @@ paths:
         description: Id of an existing user.
     get:
       summary: get user
-      tags: []
+      tags:
+        - Users
       responses:
         '200':
           description: OK
       operationId: get-users-userId
+      description: Retrieve the information of the user with the matching user ID.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     put:
       summary: update user
-      tags: []
+      tags:
+        - Users
       responses:
         '200':
           description: OK
       operationId: put-users-userId
+      description: Update the information of the user with the matching user ID.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                fullname:
+                  type: string
+                  minLength: 1
+                address:
+                  type: string
+                  minLength: 1
+                phone:
+                  type: string
+                  minLength: 1
+              required:
+                - fullname
+                - address
+                - phone
+            examples:
+              Example-1:
+                value:
+                  fullname: string
+                  address: string
+                  phone: string
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     delete:
       summary: delete user
-      tags: []
+      tags:
+        - Users
       responses:
         '204':
           description: No Content
       operationId: delete-users-userId
+      description: Delete the user matching the ID.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
   /users:
     post:
       summary: post user
-      tags: []
+      tags:
+        - Users
       responses:
         '201':
           description: Created
       operationId: post-users
+      description: Create new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                username:
+                  type: string
+                  minLength: 1
+                fullname:
+                  type: string
+                  minLength: 1
+                email:
+                  type: string
+                  minLength: 1
+                address:
+                  type: string
+                  minLength: 1
+                phone:
+                  type: string
+                  minLength: 1
+                password:
+                  type: string
+                is_admin:
+                  type: string
+                  minLength: 1
+              required:
+                - username
+                - fullname
+                - email
+                - address
+                - phone
+                - password
+                - is_admin
+            examples:
+              Example-1:
+                value:
+                  username: string
+                  fullname: string
+                  email: string
+                  address: string
+                  phone: string
+                  password: string
+                  is_admin: string
     get:
       summary: get users
-      tags: []
+      tags:
+        - Users
       responses:
         '200':
           description: OK
       operationId: get-users
+      description: Get all users
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     parameters: []
   /products:
     get:
       summary: get products
-      tags: []
+      tags:
+        - Products
       responses:
         '200':
           description: OK
       operationId: get-products
+      description: Get all existing products
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     post:
       summary: post product
-      tags: []
+      tags:
+        - Products
       responses:
         '201':
           description: Created
       operationId: post-products
+      description: Add new product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                price:
+                  type: number
+                img_url:
+                  type: string
+                  minLength: 1
+              required:
+                - name
+                - price
+                - img_url
+            examples:
+              Example 1:
+                value:
+                  name: string
+                  price: 0
+                  img_url: string
+        description: ''
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
   '/products/{productId}':
     parameters:
       - schema:
@@ -78,14 +226,23 @@ paths:
         name: productId
         in: path
         required: true
+        description: Id of existing product
     get:
       summary: Get Product Info by Product ID
-      tags: []
+      tags:
+        - Products
       responses:
         '200':
           description: OK
       operationId: get-products-productId
-      description: Retrieve the information of the product with the matching user ID.
+      description: Retrieve the information of the product with the matching ID.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     put:
       summary: Update product
       operationId: put-products-productId
@@ -98,7 +255,7 @@ paths:
             type: string
           in: header
           name: Authentication
-          description: ADMIN Auth
+          description: Login Token
           required: true
       requestBody:
         content:
@@ -107,8 +264,6 @@ paths:
               description: ''
               type: object
               properties:
-                id:
-                  type: integer
                 name:
                   type: string
                   minLength: 1
@@ -118,10 +273,17 @@ paths:
                   type: string
                   minLength: 1
               required:
-                - id
                 - name
                 - price
                 - img_url
+            examples:
+              Example 1:
+                value:
+                  name: string
+                  price: 0
+                  img_url: string
+      tags:
+        - Products
     delete:
       summary: Delete product
       operationId: delete-products-productId
@@ -134,34 +296,84 @@ paths:
             type: string
           in: header
           name: Authentication
-          description: ADMIN Auth
+          description: Login Token
           required: true
+      tags:
+        - Products
   /orders:
     get:
       summary: get orders
-      tags: []
+      tags:
+        - order
       responses:
         '200':
           description: OK
       operationId: get-orders
+      description: Retrieve all the orders
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     post:
       summary: post order
-      tags: []
+      tags:
+        - order
       responses:
         '201':
           description: Created
       operationId: post-orders
+      description: Create a new order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                products:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  items:
+                    required:
+                      - amount
+                      - product_id
+                    properties:
+                      amount:
+                        type: number
+                      product_id:
+                        type: number
+                payment_method:
+                  type: string
+                  minLength: 1
+              required:
+                - products
+                - payment_method
+            examples:
+              Pedido 1:
+                value:
+                  products:
+                    - amount: 0
+                      product_id: 0
+                  payment_method: string
+        description: ''
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
   '/orders/{orderId}':
     parameters:
       - schema:
           type: string
         name: orderId
         in: path
-        required: true
-      - schema:
-          type: string
-        name: orderId
-        in: path
+        description: Id of existing order
         required: true
     get:
       summary: get order
@@ -171,6 +383,14 @@ paths:
         '200':
           description: OK
       operationId: get-orders-orderId
+      description: Retrieve the information of the order with the matching that ID.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     put:
       summary: update order
       tags:
@@ -179,6 +399,35 @@ paths:
         '200':
           description: OK
       operationId: put-orders-orderId
+      description: Edit the information of the order with the matching the ID.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                status:
+                  type: string
+                  minLength: 1
+                payment_method:
+                  type: string
+                  minLength: 1
+              required:
+                - status
+                - payment_method
+            examples:
+              Example 1:
+                value:
+                  status: string
+                  payment_method: string
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
     delete:
       summary: delete order
       tags:
@@ -187,7 +436,15 @@ paths:
         '204':
           description: No Content
       operationId: delete-orders-orderId
-  /users/login:
+      description: Delete the order matching the ID.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: Login Token
+          required: true
+  '/users/{login}':
     post:
       summary: ''
       operationId: post-users-login
@@ -199,15 +456,32 @@ paths:
         content:
           application/json:
             schema:
+              description: ''
               type: object
               properties:
                 username:
                   type: string
+                  minLength: 1
                 password:
-                  type:
-                    - string
-                    - number
+                  type: string
+              required:
+                - username
+                - password
+            examples:
+              example-1:
+                value:
+                  username: string
+                  password: string
         description: Username and password needed to autheticate user for login
+      tags:
+        - Users
+    parameters:
+      - schema:
+          type: string
+        name: login
+        in: path
+        required: true
+        description: User autentication
 components:
   schemas:
     User:
@@ -244,12 +518,8 @@ components:
         username:
           type: string
         password:
-          type:
-            - string
-            - number
+          type: string
           format: password
-          minimum: 8
-          maximum: 20
         is_admin:
           type: boolean
         is_active:
@@ -319,14 +589,67 @@ components:
         time:
           type: string
         description:
-          type: array
-          items:
-            $ref: '#/components/schemas/Product'
+          type: string
         payment_amount:
           type: number
         payment_method:
           type: string
+        order_products:
+          $ref: '#/components/schemas/Order-Product'
       required:
         - id
         - user_id
+        - payment_method
+    Order-Product:
+      title: Order-Product
+      type: object
+      x-examples:
+        example-1:
+          id: 0
+          order_id: 0
+          product_id: 0
+          amount: 0
+      properties:
+        id:
+          type: integer
+        order_id:
+          type: integer
+        product_id:
+          type: integer
+        amount:
+          type: number
+      required:
+        - id
+        - order_id
+        - product_id
+        - amount
   securitySchemes: {}
+  parameters:
+    userId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+    productId:
+      name: productId
+      in: path
+      required: true
+      schema:
+        type: string
+    orderId:
+      name: orderId
+      in: path
+      required: true
+      schema:
+        type: string
+    login:
+      name: login
+      in: path
+      required: true
+      schema:
+        type: string
+tags:
+  - name: order
+  - name: Products
+  - name: Users
