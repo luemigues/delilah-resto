@@ -60,6 +60,12 @@ IMPORTANTE: Los nombres de los campos (ej: DB_NAME, etc) NO DEBEN MODIFICARSE, y
 Puede instalar en su ordenador la base de datos que desee XAMPP, MariaDB, Worbench MySQL de ORACLE o bien en un servidor externo.
 Una vez instalada la base y configurado el archivo *.env*, la aplicación creará automáticamente tanto la Base de Datos, como las tablas y sus relaciones.
 
+En caso que se quisieran popular las tablas con algunos ejemplos, seguir los siguientes pasos:
+    1. Abrir el la plataforma de base de datos que se usará.
+    2. Ir a la pestaña de servidor.
+    3. Importar los archivos .sql ubicados en la carpeta "Populate_tables" contenida dentro de la carpeta ¨database¨.
+    4. También, se puede copiar y pegar los textos dentro de cada archivo y se obtendrá el mismo resultado. 
+
 ### 3. Iniciar el servidor
 
 Abra la terminal y corra el siguiente comando. 
@@ -70,7 +76,7 @@ npm start
 
 ### 4. ¡La base de datos ya está lista para ser usada!
 
-####Para probar la implementación de la API: 
+#### Para probar la implementación de la API: 
  Ingresar a https://documenter.getpostman.com/view/12198401/TW74k5fZ. Allí se pude ver la documentación para la implementación de la API y dando click en "Correr en Postman" arriba a la derecha se podrá testar la misma una vez que esté corriendo el server previamente configurado. En caso que el botón de la web no funcionará, también se podrá importar en Postman el archivo `Delilah-resto API.postman_collection` ubicado en la carpeta `Reference`. 
 
 ## NPM Packages
