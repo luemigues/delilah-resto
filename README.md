@@ -85,13 +85,13 @@ npm start
 
 
 ## NPM Packages
-Express : Framework that provides an easy-way to handle request and managing routes.
-nodemon : Used in dev instance for fast server reloading.
-jsonwebtoken : Creation and validation of JWT authorization method.
-dotenv : Used to protect JWT passphrase.
-body-parser : Parse incoming request bodies in a middleware before your handlers.
-Sequelize : ORM for MySQL connection and querying.
-mysql2 : MySQL client for nodejs. Integrated in Sequelize.
-cryptr : A simple aes-256-gcm encrypt and decrypt module for node.js
+- Express : Framework that provides an easy-way to handle request and managing routes.
+- nodemon : Used in dev instance for fast server reloading.
+- jsonwebtoken : Creation and validation of JWT authorization method.
+- dotenv : Used to protect JWT passphrase.
+- body-parser : Parse incoming request bodies in a middleware before your handlers.
+- Sequelize : ORM for MySQL connection and querying.
+- mysql2 : MySQL client for nodejs. Integrated in Sequelize.
+- cryptr : A simple aes-256-gcm encrypt and decrypt module for node.js
 
 
