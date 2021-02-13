@@ -1,45 +1,49 @@
-# Delilah Resto - Acamica Backend Proyect
-### El objetivo del trabajo es generar el backend de una app de pedidos llamada Delilah Restó, generando la arquitectura, bases de datos relacionales, endpoints funcionales y documentación para que la API que pueda ser consumida.
+# Delilah Resto - Backend Proyect
 
-### Recursos y tecnologías utilizadas
+## Test de API
+Get the server running and enter https://documenter.getpostman.com/view/12198401/TW74k5fZ.
+
+### The proyect consist on a Rest API, which allows user to manage a list of users, products and orders from a restaurant. The API allows connection with a MySQL database to store and manage the Resto's data.
+
+### Resources and technologies
 
 - Node.js
 - MySQL
 - Express
-- Jason Web Token para autenticación via Token
+- Jason Web Token for authentication via Token
 - Sequelize
-- Postman para manejo de endpoints y testing
-- Swagger para documentación de API
-- Crypto para encriptacion de contraseñas
+- Postman for endpoint management and testing
+- Swagger for API documentation
+- Crypto for password encryption
 
-### Principales Características
+### Main features
 
-- Validación de roles e identificación con JWT
-- CRUD de usuarios, productos y pedidos
-- Permite reconocer al usuario por medio del token
-- Validación de datos enviados mediante el body de la petición
+- Role validation and identification with JWT
+- CRUD of users, products and orders
+- Recognition the user ID and admin role through the token
+- Validation of data sent through the request's body
 
-## Documentación de la API
+## API documentation
 
-Abrir el archivo `Delilah-resto.v1.yaml` ubicado en la carpeta `reference` y copiar su contenido en [Swagger](https://editor.swagger.io/) o importar el mismo desde las opciones. Se podrá ver el listado de endpoints, métodos disponibles y la información necesaria para hacer uso de los mismos.
+Open the file `Delilah-resto.v1.yaml` located in the` reference` folder and copy its content to [Swagger] (https://editor.swagger.io/) or import from the options. You will be able to see the list of endpoints, available methods and the information necessary to make use of them.
 
-## Como iniciar ?
-### 1. Crear el servidor
+## Getting started
 
-1. Instale [nodejs](https://nodejs.org) o verifique si ya lo tiene instalado en el terminal ingresando el comando
+### 1 - Create the server
+
+1. Install [nodejs] (https://nodejs.org) or check if you already have it installed in the terminal by entering the command
 ```bash
 node --version
+
 ```
-
-2. Clone el repositorio. Para este paso es importante instalar [Git](https://git-scm.com/). Luego abra la consola, clone el repositorio e instale las dependencias
-
+2. Clone the repository. For this step it is important to install [Git] (https://git-scm.com/). Then open the terminal, clone the repository and install the dependencies.
 ```bash
 git clone https://github.com/luemigues/delilah-resto.git
 cd delilah-resto
 npm install
 ```
 
-3. Ingrese a la carpeta donde se encuentra el repositorio clonado y cree un archivo `.env` . Esto le permitirá configurar la base de datos y el token ingresando contraseñas de forma privada que no quedarán de acceso público. Dentro del archivo agregue estos campos:
+3. Go to the folder where the cloned repository is located and create an `.env` file. This will allow you to setup the database and the token by entering passwords privately that will not be made public. Inside the file add these fields:
 
 ```bash
 DB_USER=*usuario de la base de datos*
@@ -52,32 +56,33 @@ SIGNATURE=*firma secreta para encriptar token*
 CRYPTOKEY=*firma secreta para encriptación de las contraseñas de los usuarios*
 ```
 
-IMPORTANTE: Los nombres de los campos (ej: DB_NAME, etc) NO DEBEN MODIFICARSE, ya que configuran la conexión a la Base de datos. Tampoco deben agregarse espacios antes o después el signo `=` ya que alterara el resultado. No deben haber espacios, ni comillas, ni comas
+IMPORTANT: The names of the fields (eg: DB_NAME, etc) MUST NOT BE MODIFIED, since they setup the connection to the Database. Neither should there be spaces added before or after the `=` sign as it will alter the result. There should be no spaces, no quotes, or commas.
 
 
-### 2 - Crear base de datos
+### 2 - Create database
 
-Puede instalar en su ordenador la base de datos que desee XAMPP, MariaDB, Worbench MySQL de ORACLE o bien en un servidor externo.
-Una vez instalada la base y configurado el archivo *.env*, la aplicación creará automáticamente tanto la Base de Datos, como las tablas y sus relaciones.
+You can install the database you want on your computer XAMPP, MariaDB, Worbench MySQL from ORACLE or on an external server.
+Once the database is installed and the * .env * file is setup, the application will automatically create the Database, as well as the tables and their relationships.
 
-En caso que se quisieran popular las tablas con algunos ejemplos, seguir los siguientes pasos:
-1. Abrir el la plataforma de base de datos que se usará.
-2. Ir a la pestaña de servidor.
-3. Importar los archivos .sql ubicados en la carpeta "Populate_tables" contenida dentro de la carpeta ¨database¨.
-4. También, se puede copiar y pegar los textos dentro de cada archivo y se obtendrá el mismo resultado. 
+In case you would like to populate the tables with some examples, follow these steps:
+1. Open the database platform to be used.
+2. Go to the server tab.
+3. Import the .sql files located in the "Populate_tables" folder contained within the ¨database¨ folder.
+4. You can also copy and paste the texts within each file to achieve the same result.
 
-### 3. Iniciar el servidor
 
-Abra la terminal y corra el siguiente comando. 
+### 3 - Start the server
 
+Open terminal and run the following command:
 ```bash
 npm start
 ```
 
-### 4. ¡La base de datos ya está lista para ser usada!
+### 4 - The database is ready to be used!
 
-#### Para probar la implementación de la API: 
- Ingresar a https://documenter.getpostman.com/view/12198401/TW74k5fZ. Allí se pude ver la documentación para la implementación de la API y dando click en "Correr en Postman" arriba a la derecha se podrá testar la misma una vez que esté corriendo el server previamente configurado. En caso que el botón de la web no funcionará, también se podrá importar en Postman el archivo `Delilah-resto API.postman_collection` ubicado en la carpeta `Reference`. 
+#### Testing the API:
+ Go to https://documenter.getpostman.com/view/12198401/TW74k5fZ. You will find the documentation for the API implementation and by clicking on "Run in Postman" at the top right you can test it once the previously have setup the server and have it running. In case the web button doesn't not work, the file `Delilah-resto API.postman_collection` located in the` Reference` folder can also be imported into Postman.
+
 
 ## NPM Packages
 Express : Framework that provides an easy-way to handle request and managing routes.
